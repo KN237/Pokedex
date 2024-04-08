@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/providers/pokemons_provider.dart';
 import 'package:pokemon/screens/pokemon_info_page.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +13,17 @@ class PokemonsListPage extends StatefulWidget {
 }
 
 class _PokemonsListPageState extends State<PokemonsListPage> {
-  final ScrollController scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
+  List<Pokemon> datas = [];
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<PokemonProvider>(context, listen: false).populizePokeList();
     });
-    super.initState();
-  }
 
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
+    scrollController = ScrollController()..addListener(scrollListener);
+
+    super.initState();
   }
 
   @override
@@ -96,21 +95,24 @@ class _PokemonsListPageState extends State<PokemonsListPage> {
                     crossAxisCount: 2),
               );
             }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<PokemonProvider>(context, listen: false).changeRange(
-              start: Provider.of<PokemonProvider>(context, listen: false)
-                  .lastItemIndex,
-              end: Provider.of<PokemonProvider>(context, listen: false)
-                      .lastItemIndex +
-                  Provider.of<PokemonProvider>(context, listen: false).limit);
-        },
-        backgroundColor: Colors.cyan,
-        child: const Icon(
-          Icons.refresh,
-          color: Colors.white,
-        ),
-      ),
     );
+  }
+
+  scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent) {
+      Provider.of<PokemonProvider>(context, listen: false).changeRange(
+          start: Provider.of<PokemonProvider>(context, listen: false)
+              .lastItemIndex,
+          end: Provider.of<PokemonProvider>(context, listen: false)
+                  .lastItemIndex +
+              Provider.of<PokemonProvider>(context, listen: false).limit);
+      print('Nous sommes arrivés à la fin');
+    }
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

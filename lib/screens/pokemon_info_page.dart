@@ -4,7 +4,9 @@ import 'package:pokemon/models/pokemon.dart';
 
 class PokemonInfoPage extends StatelessWidget {
   final Pokemon pokemon;
-  const PokemonInfoPage({super.key, required this.pokemon});
+  PokemonInfoPage({super.key, required this.pokemon});
+
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
