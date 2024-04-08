@@ -131,44 +131,6 @@ class PokemonInfoPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            const Text(
-                              'Resistances',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w300),
-                            ),
-                            const SizedBox(
-                              height: 05,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: pokemon.apiResistances!
-                                  .map((e) => Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            FilterChip(
-                                              label: Text(
-                                                e.name!,
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                              onSelected: (v) {},
-                                              side: const BorderSide(
-                                                  color: Colors.transparent),
-                                              color: MaterialStateProperty
-                                                  .resolveWith((states) =>
-                                                      Colors.greenAccent
-                                                          .withOpacity(0.7)),
-                                            ),
-                                          ],
-                                        ),
-                                      ))
-                                  .toList(),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ],
